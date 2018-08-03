@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+     Registration Form
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <form [formGroup]="userFG" (ngSubmit)="formSubmit(userFG)">
+
+        <ion-list>
+              
+                <ion-item   [ngClass]="{'error-border':!userFG.controls.name.valid && userFG.controls.name.touched}">
+                           <ion-label stacked>Name</ion-label>
+                           <ion-input class="input-box" formControlName="name" type="text"></ion-input>
+                
+                       </ion-item>
+
+                <ion-item  *ngIf="userFG.controls.name.hasError('required') && userFG.controls.name.touched">
+                        <p ion-text color="danger">Name field is required!</p>
+                        </ion-item>
+                        <br>
+                        <ion-item  *ngIf="userFG.controls.name.hasError('minlength') && userFG.controls.name.touched">
+                        <p ion-text color="danger">Please enter a valid name with 2 or more characters!</p>
+                        </ion-item>
+                        
+
+         
+                        <ion-item   [ngClass]="{'error-border':!userFG.controls.username.valid && userFG.controls.username.touched}">
+                                <ion-label stacked>Username</ion-label>
+                                <ion-input class="input-box" formControlName="username" type="text"></ion-input>
+                     
+                            </ion-item>
+     
+                     <ion-item  *ngIf="userFG.controls.username.hasError('required') && userFG.controls.username.touched">
+                             <p ion-text color="danger">Username is required!</p>
+                             </ion-item>
+                             <br>
+                             <ion-item  *ngIf="userFG.controls.username.hasError('minlength') && userFG.controls.username.touched">
+                             <p ion-text color="danger">Please Provide a valid username with 8 or more characters!</p>
+                             </ion-item>
+
+
+                             <ion-item   [ngClass]="{'error-border':!userFG.controls.password.valid && userFG.controls.password.touched}">
+                                    <ion-label stacked>Password</ion-label>
+                                    <ion-input class="input-box" formControlName="password" type="password"></ion-input>
+                         
+                                </ion-item>
+         
+                         <ion-item  *ngIf="userFG.controls.password.hasError('required') && userFG.controls.password.touched">
+                                 <p ion-text color="danger">Password is required!</p>
+                                 </ion-item>
+                                 <br>
+                                 <ion-item  *ngIf="userFG.controls.password.hasError('pattern') && userFG.controls.password.touched">
+                                 <p ion-text color="danger">Please enter your password!</p>
+                                 </ion-item>
+                                 <ion-item  *ngIf="userFG.controls.password.hasError('maxLength') && userFG.controls.maxLength.touched">
+                                        <p ion-text color="danger">Minimum password length is 6!</p>
+                                        </ion-item>
+                          
+                                 <h2>Skills</h2>
+                                 <button ion-button outline style="float: right;" (click)="getSkill()"><ion-icon name="add"></ion-icon>Add new skills </button>
+                              
+                                 <div formArrayName="AddingSkillsList" margin-bottom>
+                              
+                                     <section [formGroupName]="x" *ngFor="let skill of userFG.controls.AddingSkillsList.controls;let x = index">
+                              
+                                     <ion-item-group>
+                                               <ion-item class="items">
+                                                 <ion-label stacked>Skills {{ x + 1 }}</ion-label>
+                                                 <br> <br>
+                                                 <ion-input class="input-box"
+                                                    type="text"
+                                                    maxlength="50"
+                                                    FormControlName="SkillsName"></ion-input>
+                                                    <br>
+                                              </ion-item>
+                                              <ion-item class="items">
+                                                  <ion-label stacked>Level</ion-label>
+                                                  <br>
+                                                  <ion-input class="input-box"
+                                                     type="text"
+                                                     maxlength="50"
+                                                     FormControlName=" SkillsLevel"></ion-input>
+                                                     <br>
+                                               </ion-item>
+                                       
+                                        <span
+                                           float-right
+                                           ion-button
+                                           icon-left
+                                           clear
+                                           *ngIf="userFG.controls.AddingSkillsList.length > 1"
+                                           (click)="RemoveField(x)">
+                                           <ion-icon name="close"></ion-icon>
+                                           Remove
+                                        </span> 
+                                    </ion-item-group> 
+                                  </section>
+                                  </div>
+                              
+                            
+         
+        </ion-list>
+        <button full ion-button [disabled]="userFG.invalid" type="submit">Sumbit</button>
+
+
+    </form>
+
+</ion-content>
